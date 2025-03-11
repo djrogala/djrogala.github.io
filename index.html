@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRS Tier II Teacher Pension Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calculator">
+    <h1>TRS Tier II Teacher Pension Calculator</h1>
+    <p>All values in 2025 dollars</p>
+    
+    <form id="pensionForm">
+      <label for="finalAvgSalary">Final Average Salary (8 highest years):</label>
+      <input type="number" id="finalAvgSalary" required>
+      
+      <label for="yearsOfService">Years of Service at Retirement:</label>
+      <input type="number" id="yearsOfService" required>
+      
+      <label for="currentAge">Current Age:</label>
+      <input type="number" id="currentAge" required>
+      
+      <label for="retirementAge">Planned Retirement Age:</label>
+      <input type="number" id="retirementAge" required>
+      
+      <button type="button" onclick="calculatePension()">Calculate</button>
+    </form>
+
+    <div id="result">
+      <h2>Estimated Monthly Pension (2025 Dollars):</h2>
+      <p><strong>At Retirement:</strong> <span id="monthlyAmount">$---</span></p>
+      
+      <h3>Projected Monthly Payments:</h3>
+      <ul>
+        <li><strong>Age 62:</strong> <span id="age62">$---</span></li>
+        <li><strong>Age 65:</strong> <span id="age65">$---</span></li>
+        <li><strong>Age 67:</strong> <span id="age67">$---</span></li>
+        <li><strong>Age 75:</strong> <span id="age75">$---</span></li>
+        <li><strong>Age 85:</strong> <span id="age85">$---</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
