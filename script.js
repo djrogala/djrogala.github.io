@@ -8,6 +8,8 @@ function calculatePension() {
   const MAX_YEARS_SERVICE = 35; // Maximum years of service
   const MIN_YEARS_SERVICE = 10; // Minimum years of service
   const MULTIPLIER_CAP = 0.75; // 75% cap on the multiplier
+  const MIN_RETIREMENT_AGE = 62; // Minimum retirement age
+  const MAX_RETIREMENT_AGE = 67; // Maximum retirement age
 
   // Get Inputs
   const finalAvgSalary = parseFloat(document.getElementById('finalAvgSalary').value);
@@ -24,6 +26,18 @@ function calculatePension() {
   // Reject calculation if years of service < 10
   if (yearsOfService < MIN_YEARS_SERVICE) {
     alert("10 years of service credit is the minimum needed to receive a pension benefit.");
+    return;
+  }
+
+  // Reject calculation if retirement age < 62
+  if (retirementAge < MIN_RETIREMENT_AGE) {
+    alert("62 is the minimum age at which a pension can be collected.");
+    return;
+  }
+
+  // Reject calculation if retirement age > 67
+  if (retirementAge > MAX_RETIREMENT_AGE) {
+    alert("A maximum pension is achieved at 67.");
     return;
   }
 
