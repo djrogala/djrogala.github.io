@@ -29,15 +29,9 @@ function calculatePension() {
     return;
   }
 
-  // Reject calculation if retirement age < 62
-  if (retirementAge < MIN_RETIREMENT_AGE) {
-    alert("62 is the minimum age at which a pension can be collected.");
-    return;
-  }
-
-  // Reject calculation if retirement age > 67
-  if (retirementAge > MAX_RETIREMENT_AGE) {
-    alert("A maximum pension is achieved at 67.");
+  // Reject calculation if retirement age < 62 or > 67
+  if (retirementAge < MIN_RETIREMENT_AGE || retirementAge > MAX_RETIREMENT_AGE) {
+    alert("Pension collection cannot occur under the age of 62 and is maximized at the age of 67.");
     return;
   }
 
