@@ -6,12 +6,6 @@ document.getElementById('pensionForm').addEventListener('submit', function(event
     const serviceYears = parseFloat(document.getElementById('serviceYears').value);
     const collectionAge = parseFloat(document.getElementById('collectionAge').value);
 
-    // Validate minimum service years
-    if (serviceYears < 10) {
-        alert("Error: A minimum of 10 years of service credit is required to receive a pension benefit.");
-        return; // Stop further execution
-    }
-
     const yearsToInflation = collectionAge - currentAge;
     const averageFinalSalaryAfterInflation = finalSalary * Math.pow(1.025, yearsToInflation);
     const pensionCapAfterInflation = 127283.01 * Math.pow(1.0125, yearsToInflation);
