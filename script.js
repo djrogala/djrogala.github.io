@@ -5,18 +5,22 @@ function calculatePension() {
   const MULTIPLIER = 0.022; // 2.2% per year of service
   const FULL_RETIREMENT_AGE = 67;
   const EARLY_PENALTY_PER_YEAR = 0.06; // 6% penalty per year below 67
+  const MAX_YEARS_SERVICE = 35; // Maximum years of service
+  const MIN_YEARS_SERVICE = 10; // Minimum years of service
+  const MULTIPLIER_CAP = 0.75; // 75% cap on the multiplier
 
   // Get Inputs
   const finalAvgSalary = parseFloat(document.getElementById('finalAvgSalary').value);
-  const yearsOfService = parseFloat(document.getElementById('yearsOfService').value);
+  let yearsOfService = parseFloat(document.getElementById('yearsOfService').value);
   const currentAge = parseFloat(document.getElementById('currentAge').value);
   const retirementAge = parseFloat(document.getElementById('retirementAge').value);
 
-  // Validate
+  // Validate and clamp years of service
   if ([finalAvgSalary, yearsOfService, currentAge, retirementAge].some(isNaN)) {
     alert("Please fill all fields with valid numbers.");
     return;
   }
+  yearsOfService = Math.min(Math.max(yearsOfService, MIN_YEARS_SERVICE), MAX_YEARS_SERVICE);
 
   // Calculate Years Until Retirement
   const yearsUntilRetirement = retirementAge - currentAge;
@@ -30,7 +34,9 @@ function calculatePension() {
   const cappedSalary = Math.min(finalAvgSalary, adjustedCap);
 
   // Calculate Base Pension
-  let annualPension = MULTIPLIER * yearsOfService * cappedSalary;
+  let pensionPercentage = MULTIPLIER * yearsOfService; // 2.2% per year
+  pensionPercentage = Math.min(pensionPercentage, MULTIPLIER_CAP); // Cap at 75%
+  let annualPension = pensionPercentage * cappedSalary;
 
   // Early Retirement Penalty
   if (retirementAge < FULL_RETIREMENT_AGE) {
@@ -50,7 +56,7 @@ function calculatePension() {
     const yearsFromRetirement = age - retirementAge;
     const projectedCap = adjustedCap * Math.pow(1 + CAP_GROWTH_RATE, yearsFromRetirement);
     const projectedSalary = Math.min(finalAvgSalary, projectedCap);
-    let projectedPension = MULTIPLIER * yearsOfService * projectedSalary;
+    let projectedPension = pensionPercentage * projectedSalary;
 
     // Apply early penalty if applicable
     if (age < FULL_RETIREMENT_AGE) {
