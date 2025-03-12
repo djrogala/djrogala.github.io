@@ -1,70 +1,50 @@
-function calculatePension() {
-  // Tier II Constants (2025 Dollars)
-  const INITIAL_CAP = 127283.01; // 2025 cap
-  const CAP_GROWTH_RATE = -0.0125; // -1.25% annual real growth
-  const MULTIPLIER = 0.022; // 2.2% per year of service
-  const FULL_RETIREMENT_AGE = 67;
-  const EARLY_PENALTY_PER_YEAR = 0.06; // 6% penalty per year below 67
-  const MAX_YEARS_SERVICE = 35; // Maximum years of service
-  const MIN_YEARS_SERVICE = 10; // Minimum years of service
-  const MULTIPLIER_CAP = 0.75; // 75% cap on the multiplier
+document.getElementById('pensionForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  // Get Inputs
-  const finalAvgSalary = parseFloat(document.getElementById('finalAvgSalary').value);
-  let yearsOfService = parseFloat(document.getElementById('yearsOfService').value);
-  const currentAge = parseFloat(document.getElementById('currentAge').value);
-  const retirementAge = parseFloat(document.getElementById('retirementAge').value);
+    const finalSalary = parseFloat(document.getElementById('finalSalary').value);
+    const currentAge = parseFloat(document.getElementById('currentAge').value);
+    const serviceYears = parseFloat(document.getElementById('serviceYears').value);
+    const collectionAge = parseFloat(document.getElementById('collectionAge').value);
 
-  // Validate and clamp years of service
-  if ([finalAvgSalary, yearsOfService, currentAge, retirementAge].some(isNaN)) {
-    alert("Please fill all fields with valid numbers.");
-    return;
-  }
-  yearsOfService = Math.min(Math.max(yearsOfService, MIN_YEARS_SERVICE), MAX_YEARS_SERVICE);
-
-  // Calculate Years Until Retirement
-  const yearsUntilRetirement = retirementAge - currentAge;
-  const retirementYear = 2025 + yearsUntilRetirement;
-
-  // Adjust Cap for 2025 Dollars
-  const yearsFrom2025 = retirementYear - 2025;
-  const adjustedCap = INITIAL_CAP * Math.pow(1 + CAP_GROWTH_RATE, yearsFrom2025);
-
-  // Apply Cap to Salary
-  const cappedSalary = Math.min(finalAvgSalary, adjustedCap);
-
-  // Calculate Base Pension
-  let pensionPercentage = MULTIPLIER * yearsOfService; // 2.2% per year
-  pensionPercentage = Math.min(pensionPercentage, MULTIPLIER_CAP); // Cap at 75%
-  let annualPension = pensionPercentage * cappedSalary;
-
-  // Early Retirement Penalty
-  if (retirementAge < FULL_RETIREMENT_AGE) {
-    const penaltyYears = FULL_RETIREMENT_AGE - retirementAge;
-    annualPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
-  }
-
-  // Monthly Pension
-  const monthlyPension = annualPension / 12;
-
-  // Display Results
-  document.getElementById('monthlyAmount').textContent = `$${monthlyPension.toFixed(2)}`;
-
-  // Projected Payments at Specific Ages
-  const ages = [62, 65, 67, 75, 85];
-  ages.forEach(age => {
-    const yearsFromRetirement = age - retirementAge;
-    const projectedCap = adjustedCap * Math.pow(1 + CAP_GROWTH_RATE, yearsFromRetirement);
-    const projectedSalary = Math.min(finalAvgSalary, projectedCap);
-    let projectedPension = pensionPercentage * projectedSalary;
-
-    // Apply early penalty if applicable
-    if (age < FULL_RETIREMENT_AGE) {
-      const penaltyYears = FULL_RETIREMENT_AGE - age;
-      projectedPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
+    // Validate minimum service years
+    if (serviceYears < 10) {
+        alert("Error: A minimum of 10 years of service credit is required to receive a pension benefit.");
+        return; // Stop further execution
     }
 
-    const projectedMonthly = projectedPension / 12;
-    document.getElementById(`age${age}`).textContent = `$${projectedMonthly.toFixed(2)}`;
-  });
-}
+    const yearsToInflation = collectionAge - currentAge;
+    const averageFinalSalaryAfterInflation = finalSalary * Math.pow(1.025, yearsToInflation);
+    const pensionCapAfterInflation = 127283.01 * Math.pow(1.0125, yearsToInflation);
+    const salaryUsedForPension = Math.min(averageFinalSalaryAfterInflation, pensionCapAfterInflation);
+    const pensionFormula = serviceYears * 2.2;
+    const pensionPercentage = Math.min(pensionFormula, 75);
+    const benefitReduction = (67 - collectionAge) * 0.06;
+    const finalPensionPercentage = pensionPercentage * (1 - benefitReduction);
+    const pensionFutureDollars = salaryUsedForPension * (finalPensionPercentage / 100);
+    const pensionTodayDollars = pensionFutureDollars * (Math.pow(1.0125, yearsToInflation) / Math.pow(1.025, yearsToInflation));
+
+    document.getElementById('pensionValue').textContent = pensionTodayDollars.toFixed(2);
+
+    // Calculate pension at different ages
+    const pensionTable = document.getElementById('pensionTable').getElementsByTagName('tbody')[0];
+    pensionTable.innerHTML = ''; // Clear previous results
+
+    for (let age = 62; age <= 67; age++) {
+        const yearsToInflationAge = age - currentAge;
+        const averageFinalSalaryAfterInflationAge = finalSalary * Math.pow(1.025, yearsToInflationAge);
+        const pensionCapAfterInflationAge = 127283.01 * Math.pow(1.0125, yearsToInflationAge);
+        const salaryUsedForPensionAge = Math.min(averageFinalSalaryAfterInflationAge, pensionCapAfterInflationAge);
+        const pensionFormulaAge = serviceYears * 2.2;
+        const pensionPercentageAge = Math.min(pensionFormulaAge, 75);
+        const benefitReductionAge = (67 - age) * 0.06;
+        const finalPensionPercentageAge = pensionPercentageAge * (1 - benefitReductionAge);
+        const pensionFutureDollarsAge = salaryUsedForPensionAge * (finalPensionPercentageAge / 100);
+        const pensionTodayDollarsAge = pensionFutureDollarsAge * (Math.pow(1.0125, yearsToInflationAge) / Math.pow(1.025, yearsToInflationAge));
+
+        const row = pensionTable.insertRow();
+        const cellAge = row.insertCell(0);
+        const cellPension = row.insertCell(1);
+        cellAge.textContent = age;
+        cellPension.textContent = pensionTodayDollarsAge.toFixed(2);
+    }
+});
