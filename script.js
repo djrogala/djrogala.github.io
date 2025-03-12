@@ -15,10 +15,10 @@ function calculatePension() {
   const finalAvgSalary = parseFloat(document.getElementById('finalAvgSalary').value);
   const yearsOfService = parseFloat(document.getElementById('yearsOfService').value);
   const currentAge = parseFloat(document.getElementById('currentAge').value);
-  const retirementAge = parseFloat(document.getElementById('retirementAge').value);
+  const pensionCollectionAge = parseFloat(document.getElementById('pensionCollectionAge').value);
 
   // Validate inputs
-  if ([finalAvgSalary, yearsOfService, currentAge, retirementAge].some(isNaN)) {
+  if ([finalAvgSalary, yearsOfService, currentAge, pensionCollectionAge].some(isNaN)) {
     alert("Please fill all fields with valid numbers.");
     return;
   }
@@ -29,8 +29,8 @@ function calculatePension() {
     return;
   }
 
-  // Reject calculation if retirement age < 62 or > 67
-  if (retirementAge < MIN_RETIREMENT_AGE || retirementAge > MAX_RETIREMENT_AGE) {
+  // Reject calculation if pension collection age < 62 or > 67
+  if (pensionCollectionAge < MIN_RETIREMENT_AGE || pensionCollectionAge > MAX_RETIREMENT_AGE) {
     alert("Pension collection cannot occur under the age of 62 and is maximized at the age of 67.");
     return;
   }
@@ -38,12 +38,12 @@ function calculatePension() {
   // Clamp years of service to maximum
   const clampedYearsOfService = Math.min(yearsOfService, MAX_YEARS_SERVICE);
 
-  // Calculate Years Until Retirement
-  const yearsUntilRetirement = retirementAge - currentAge;
-  const retirementYear = 2025 + yearsUntilRetirement;
+  // Calculate Years Until Pension Collection
+  const yearsUntilCollection = pensionCollectionAge - currentAge;
+  const collectionYear = 2025 + yearsUntilCollection;
 
   // Adjust Cap for 2025 Dollars
-  const yearsFrom2025 = retirementYear - 2025;
+  const yearsFrom2025 = collectionYear - 2025;
   const adjustedCap = INITIAL_CAP * Math.pow(1 + CAP_GROWTH_RATE, yearsFrom2025);
 
   // Apply Cap to Salary
@@ -55,8 +55,8 @@ function calculatePension() {
   let annualPension = pensionPercentage * cappedSalary;
 
   // Early Retirement Penalty
-  if (retirementAge < FULL_RETIREMENT_AGE) {
-    const penaltyYears = FULL_RETIREMENT_AGE - retirementAge;
+  if (pensionCollectionAge < FULL_RETIREMENT_AGE) {
+    const penaltyYears = FULL_RETIREMENT_AGE - pensionCollectionAge;
     annualPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
   }
 
@@ -69,8 +69,8 @@ function calculatePension() {
   // Projected Payments at Specific Ages
   const ages = [62, 65, 67, 75, 85];
   ages.forEach(age => {
-    const yearsFromRetirement = age - retirementAge;
-    const projectedCap = adjustedCap * Math.pow(1 + CAP_GROWTH_RATE, yearsFromRetirement);
+    const yearsFromCollection = age - pensionCollectionAge;
+    const projectedCap = adjustedCap * Math.pow(1 + CAP_GROWTH_RATE, yearsFromCollection);
     const projectedSalary = Math.min(finalAvgSalary, projectedCap);
     let projectedPension = pensionPercentage * projectedSalary;
 
