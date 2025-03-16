@@ -3,7 +3,7 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f7f7f7;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,35 +11,21 @@ body {
 }
 
 .calculator-container {
-  display: flex;
-  gap: 20px;
-  max-width: 900px;
+  max-width: 800px;
   width: 100%;
-  margin: 20px;
-}
-
-.left-note {
-  width: 250px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
+  background: white;
+  border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
+  overflow: hidden;
 }
 
 .calculator {
-  flex: 1;
-  background: #ffffff;
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   font-size: 24px;
-  color: #333;
+  color: #004785;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -82,7 +68,7 @@ button {
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  color: #fff;
+  color: white;
   background-color: #007bff;
   border: none;
   border-radius: 5px;
@@ -129,11 +115,11 @@ h3 {
 .projected-payments li {
   font-size: 14px;
   color: #555;
-  margin-bottom: 8px;
+  margin-bottom: 15px; /* Increased spacing */
 }
 
-/* Disclaimer */
-.disclaimer {
+/* Fine Print at Bottom */
+.fine-print {
   margin-top: 20px;
   padding: 15px;
   background-color: #f1f1f1;
@@ -143,6 +129,55 @@ h3 {
   line-height: 1.5;
 }
 
-.disclaimer p {
+.fine-print p {
   margin: 5px 0;
+}
+
+/* Explanatory Section */
+.explained-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border-left: 4px solid #004785;
+}
+
+.explained-section h3 {
+  font-size: 16px;
+  color: #004785;
+  margin-bottom: 10px;
+}
+
+.explained-section p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .calculator {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .explained-section {
+    padding: 15px;
+  }
+
+  .explained-section h3 {
+    font-size: 14px;
+  }
+
+  .explained-section p {
+    font-size: 12px;
+  }
 }
