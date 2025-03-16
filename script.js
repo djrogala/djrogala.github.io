@@ -1,8 +1,7 @@
 function calculatePension() {
   // Tier II Constants (2025 Dollars)
   const INITIAL_CAP = 127283.01; // 2025 cap
-  const CAP_GROWTH_RATE = -0.0125; // -1.25% annual real growth (cap erosion)
-  const PENSION_GROWTH_RATE = 0.0125; // 1.25% annual growth (½ CPI)
+  const CAP_GROWTH_RATE = -0.0125; // -1.25% annual real growth
   const MULTIPLIER = 0.022; // 2.2% per year of service
   const FULL_RETIREMENT_AGE = 67;
   const EARLY_PENALTY_PER_YEAR = 0.06; // 6% penalty per year below 67
@@ -53,33 +52,33 @@ function calculatePension() {
   pensionPercentage = Math.min(pensionPercentage, MULTIPLIER_CAP); // Cap at 75%
   let annualPension = pensionPercentage * cappedSalary;
 
-  // Apply Early Retirement Penalty (if applicable)
+  // Early Retirement Penalty
   if (pensionCollectionAge < FULL_RETIREMENT_AGE) {
     const penaltyYears = FULL_RETIREMENT_AGE - pensionCollectionAge;
     annualPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
   }
 
-  // Monthly Pension at Collection
-  const monthlyPensionAtCollection = annualPension / 12;
+  // Monthly Pension
+  const monthlyPension = annualPension / 12;
 
   // Display Results
-  document.getElementById('monthlyAmount').textContent = `$${monthlyPensionAtCollection.toFixed(2)}`;
+  document.getElementById('monthlyAmount').textContent = `$${monthlyPension.toFixed(2)}`;
 
   // Projected Payments at Specific Ages
   const ages = [62, 65, 67, 75, 85];
   ages.forEach(age => {
-    if (age < pensionCollectionAge) return; // Skip ages before collection
-
-    // Calculate years from collection
     const yearsFromCollection = age - pensionCollectionAge;
+    const projectedCap = adjustedCap * Math.pow(1 + CAP_GROWTH_RATE, yearsFromCollection);
+    const projectedSalary = Math.min(finalAvgSalary, projectedCap);
+    let projectedPension = pensionPercentage * projectedSalary;
 
-    // Apply pension growth (1.25% annually)
-    let projectedMonthly = monthlyPensionAtCollection * Math.pow(1 + PENSION_GROWTH_RATE, yearsFromCollection);
+    // Apply early penalty if applicable
+    if (age < FULL_RETIREMENT_AGE) {
+      const penaltyYears = FULL_RETIREMENT_AGE - age;
+      projectedPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
+    }
 
-    // Apply cap erosion (-1.25% annually)
-    projectedMonthly *= Math.pow(1 + CAP_GROWTH_RATE, yearsFromCollection);
-
-    // Display the result
+    const projectedMonthly = projectedPension / 12;
     document.getElementById(`age${age}`).textContent = `$${projectedMonthly.toFixed(2)}`;
   });
 }
