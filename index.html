@@ -8,11 +8,6 @@
 </head>
 <body>
   <div class="calculator-container">
-    <!-- Left Margin Note -->
-    <div class="left-note">
-      <p>The 2025 cap on a Tier II pension is $127,283.01. This cap grows at a rate of 1/2 the CPI inflation rate or 3%, whichever is lower, resulting in a decrease in purchasing power over time. Accordingly, this is why you will see the purchasing power of a pension payout decrease throughout retirement.</p>
-    </div>
-
     <!-- Calculator -->
     <div class="calculator">
       <h1>TRS Tier II Teacher Pension Calculator</h1>
@@ -50,18 +45,25 @@
         <ul class="projected-payments">
           <li><strong>Age 62*:</strong> <span id="age62">$---</span></li>
           <li><strong>Age 65*:</strong> <span id="age65">$---</span></li>
-          <li><strong>Age 67:</strong> <span id="age67">$---</span></li>
+          <li><strong>Age 67<sup>1</sup>:</strong> <span id="age67">$---</span></li>
           <li><strong>Age 75:</strong> <span id="age75">$---</span></li>
           <li><strong>Age 85:</strong> <span id="age85">$---</span></li>
         </ul>
       </div>
 
-      <!-- Disclaimer Messages -->
-      <div class="disclaimer">
+      <!-- Fine Print at Bottom -->
+      <div class="fine-print">
+        <p>* A 6% per year penalty applies if pension is collected before age 67.</p>
+        <p><sup>1</sup> Full pension without penalty.</p>
+      </div>
+
+      <!-- Moved Explanatory Section -->
+      <div class="explained-section">
+        <h3>Tier II Pensions Explained</h3>
+        <p>The 2025 cap on a Tier II pension is $127,283.01. This cap grows at a rate of 1/2 the CPI inflation rate or 3%, whichever is lower, resulting in a decrease in purchasing power over time. This is why you will see the pension value fall from ages 67 to 75 to 85.</p>
         <p>Monthly pension estimates are pre-federal income tax.</p>
         <p>This estimate assumes an inflation rate of 2.5% and cannot guarantee accuracy.</p>
         <p>This pension estimate is not affiliated with TRS, IEA, or NEA.</p>
-        <p>* A 6% per year penalty applies if pension is collected before age 67.</p>
       </div>
     </div>
   </div>
