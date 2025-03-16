@@ -7,62 +7,81 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="calculator-container">
-    <!-- Left Margin Note -->
-    <div class="left-note">
+  <div class="container">
+    <!-- Left Information Panel -->
+    <div class="info-panel">
       <h2>Tier II Pensions Explained</h2>
-      <p>The 2025 cap on a Tier II pension is $127,283.01. This cap grows at a rate of 1/2 the CPI inflation rate or 3%, whichever is lower, resulting in a decrease in purchasing power over time. This is why you will see the pension value fall from ages 67 to 75 to 85.</p>
-      <p>This estimate assumes an inflation rate of 2.5% and cannot guarantee accuracy.</p>
-      <p>This pension estimate is not affiliated with TRS, IEA, or NEA.</p>
+      <div class="info-box">
+        <p>The 2025 cap is $127,283.01. This cap grows at ½ CPI or 3% (whichever is lower), reducing purchasing power over time.</p>
+        <hr>
+        <p class="disclaimer">This estimate assumes 2.5% inflation.<br>Not affiliated with TRS/IEA/NEA.</p>
+      </div>
     </div>
 
     <!-- Calculator -->
     <div class="calculator">
-      <h1>TRS Tier II Teacher Pension Calculator</h1>
-      <p class="subtitle">All values in 2025 dollars</p>
-      
-      <form id="pensionForm">
-        <div class="input-group">
-          <label for="finalAvgSalary">Final Average Salary (8 highest years):</label>
-          <input type="number" id="finalAvgSalary" required>
-        </div>
-        
-        <div class="input-group">
-          <label for="yearsOfService">Years of Service at Pension Collection:</label>
-          <input type="number" id="yearsOfService" required>
-        </div>
-        
-        <div class="input-group">
-          <label for="currentAge">Current Age:</label>
-          <input type="number" id="currentAge" required>
-        </div>
-        
-        <div class="input-group">
-          <label for="pensionCollectionAge">Pension Collection Age:</label>
-          <input type="number" id="pensionCollectionAge" required>
-        </div>
-        
-        <button type="button" onclick="calculatePension()">Calculate</button>
-      </form>
+      <h1>TRS Tier II Pension Calculator</h1>
+      <p class="subtitle">Values shown in 2025 dollars</p>
 
-      <div id="result">
-        <h2>Estimated Monthly Pension (2025 Dollars):</h2>
-        <p class="result-value"><strong>Pension Collection at Chosen Age:</strong> <span id="monthlyAmount">$---</span></p>
-        
-        <h3>Projected Monthly Payments:</h3>
-        <ul class="projected-payments">
-          <li><strong>Age 62*:</strong> <span id="age62">$---</span></li>
-          <li><strong>Age 65*:</strong> <span id="age65">$---</span></li>
-          <li><strong>Age 67<sup>1</sup>:</strong> <span id="age67">$---</span></li>
-          <li><strong>Age 75:</strong> <span id="age75">$---</span></li>
-          <li><strong>Age 85:</strong> <span id="age85">$---</span></li>
-        </ul>
+      <div class="input-section">
+        <div class="input-group">
+          <label>Final Average Salary (8 highest years)</label>
+          <input type="number" id="finalAvgSalary" placeholder="Enter amount">
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>Years of Service</label>
+            <input type="number" id="yearsOfService" placeholder="Years">
+          </div>
+          <div class="input-group">
+            <label>Current Age</label>
+            <input type="number" id="currentAge" placeholder="Age">
+          </div>
+          <div class="input-group">
+            <label>Collection Age</label>
+            <input type="number" id="pensionCollectionAge" placeholder="Age">
+          </div>
+        </div>
+
+        <button onclick="calculatePension()">Calculate</button>
       </div>
 
-      <!-- Fine Print at Bottom -->
-      <div class="fine-print">
-        <p>* A 6% per year penalty applies if pension is collected before age 67.</p>
-        <p><sup>1</sup> If pension is collected without penalty.</p>
+      <!-- Results -->
+      <div class="results-box">
+        <h3>Estimated Monthly Pension</h3>
+        <div class="result-item">
+          <span>At Chosen Age:</span>
+          <strong id="monthlyAmount">$---</strong>
+        </div>
+        
+        <h4>Projected Payments</h4>
+        <div class="projection-grid">
+          <div class="projection-item">
+            <span>Age 62*</span>
+            <span id="age62">$---</span>
+          </div>
+          <div class="projection-item">
+            <span>Age 65*</span>
+            <span id="age65">$---</span>
+          </div>
+          <div class="projection-item">
+            <span>Age 67<sup>1</sup></span>
+            <span id="age67">$---</span>
+          </div>
+          <div class="projection-item">
+            <span>Age 75</span>
+            <span id="age75">$---</span>
+          </div>
+          <div class="projection-item">
+            <span>Age 85</span>
+            <span id="age85">$---</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        <p>*6% annual penalty pre-67 | <sup>1</sup>No penalty applied</p>
       </div>
     </div>
   </div>
