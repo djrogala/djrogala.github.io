@@ -21,13 +21,13 @@ function calculatePension() {
     return;
   }
 
-  // Reject calculation if years of service < 10
+  // Validate years of service
   if (yearsOfService < MIN_YEARS_SERVICE) {
     alert("10 years of service credit is the minimum needed to receive a pension benefit.");
     return;
   }
 
-  // Reject calculation if pension collection age < 62 or > 67
+  // Validate pension collection age
   if (pensionCollectionAge < 62 || pensionCollectionAge > 67) {
     alert("Pension collection cannot occur under the age of 62 and is maximized at the age of 67.");
     return;
@@ -52,13 +52,13 @@ function calculatePension() {
   pensionPercentage = Math.min(pensionPercentage, MULTIPLIER_CAP); // Cap at 75%
   let annualPension = pensionPercentage * cappedSalary;
 
-  // Early Retirement Penalty
+  // Apply Early Retirement Penalty
   if (pensionCollectionAge < FULL_RETIREMENT_AGE) {
     const penaltyYears = FULL_RETIREMENT_AGE - pensionCollectionAge;
     annualPension *= Math.pow(1 - EARLY_PENALTY_PER_YEAR, penaltyYears);
   }
 
-  // Monthly Pension
+  // Calculate Monthly Pension
   const monthlyPension = annualPension / 12;
 
   // Display Results
