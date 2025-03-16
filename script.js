@@ -8,8 +8,6 @@ function calculatePension() {
   const MAX_YEARS_SERVICE = 35; // Maximum years of service
   const MIN_YEARS_SERVICE = 10; // Minimum years of service
   const MULTIPLIER_CAP = 0.75; // 75% cap on the multiplier
-  const MIN_RETIREMENT_AGE = 62; // Minimum retirement age
-  const MAX_RETIREMENT_AGE = 67; // Maximum retirement age
 
   // Get Inputs
   const finalAvgSalary = parseFloat(document.getElementById('finalAvgSalary').value);
@@ -30,7 +28,7 @@ function calculatePension() {
   }
 
   // Reject calculation if pension collection age < 62 or > 67
-  if (pensionCollectionAge < MIN_RETIREMENT_AGE || pensionCollectionAge > MAX_RETIREMENT_AGE) {
+  if (pensionCollectionAge < 62 || pensionCollectionAge > 67) {
     alert("Pension collection cannot occur under the age of 62 and is maximized at the age of 67.");
     return;
   }
